@@ -1,0 +1,1270 @@
+{
+    "regional": {
+        "id": "sumatera",
+        "nama": "Sumatera",
+        "dampak": {
+            "totalTerdampak": 148386,
+            "mengungsi": 7245,
+            "korbanJiwa": 35,
+            "rumahRusak": 6000,
+            "rumahSakit": 32,
+            "sekolah": 85,
+            "jembatan": 12,
+            "puskesmas": 48,
+            "gedungPemerintah": 18
+        },
+        "respon": {
+            "personil": 950,
+            "unitMedis": 32,
+            "logistik": 85,
+            "dana": 3.5
+        },
+        "progress": {
+            "restorasiRumahSakit": 5,
+            "rsOperasional": 2,
+            "restorasiRumahTinggal": 1245,
+            "restorasiSekolah": 12,
+            "restorasiJembatan": 2,
+            "restorasiPuskesmas": 15,
+            "puskesmasOperasional": 8,
+            "restorasiGedungPemerintah": 4
+        }
+    },
+    "provinces": {
+        "Aceh": {
+            "id": "aceh",
+            "nama": "Aceh",
+            "dampak": {
+                "totalTerdampak": 7200,
+                "mengungsi": 380,
+                "korbanJiwa": 12,
+                "rumahRusak": 2122,
+                "rumahSakit": 9,
+                "sekolah": 28,
+                "jembatan": 4,
+                "puskesmas": 15,
+                "gedungPemerintah": 6
+            },
+            "respon": {
+                "personil": 350,
+                "unitMedis": 9,
+                "logistik": 30,
+                "dana": 1.2
+            },
+            "progress": {
+                "restorasiRumahSakit": 2,
+                "rsOperasional": 1,
+                "restorasiRumahTinggal": 456,
+                "restorasiSekolah": 4,
+                "restorasiJembatan": 1,
+                "restorasiPuskesmas": 5,
+                "puskesmasOperasional": 3,
+                "restorasiGedungPemerintah": 2
+            }
+        },
+        "Sumatera Utara": {
+            "id": "sumut",
+            "nama": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 8500,
+                "mengungsi": 450,
+                "korbanJiwa": 12,
+                "rumahRusak": 3159,
+                "rumahSakit": 1,
+                "sekolah": 2,
+                "jembatan": 1,
+                "puskesmas": 3,
+                "gedungPemerintah": 2
+            },
+            "respon": {
+                "personil": 350,
+                "unitMedis": 17,
+                "logistik": 30,
+                "dana": 1.2
+            },
+            "progress": {
+                "restorasiRumahSakit": 1,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 414,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 3,
+                "puskesmasOperasional": 2,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Sumatera Barat": {
+            "id": "sumbar",
+            "nama": "Sumatera Barat",
+            "dampak": {
+                "totalTerdampak": 4500,
+                "mengungsi": 250,
+                "korbanJiwa": 11,
+                "rumahRusak": 719,
+                "rumahSakit": 22,
+                "sekolah": 55,
+                "jembatan": 7,
+                "puskesmas": 30,
+                "gedungPemerintah": 10
+            },
+            "respon": {
+                "personil": 250,
+                "unitMedis": 6,
+                "logistik": 25,
+                "dana": 1.1
+            },
+            "progress": {
+                "restorasiRumahSakit": 2,
+                "rsOperasional": 1,
+                "restorasiRumahTinggal": 375,
+                "restorasiSekolah": 8,
+                "restorasiJembatan": 1,
+                "restorasiPuskesmas": 7,
+                "puskesmasOperasional": 3,
+                "restorasiGedungPemerintah": 2
+            }
+        }
+    },
+    "regencies": {
+        "Aceh Besar": {
+            "province": "Aceh",
+            "dampak": {
+                "totalTerdampak": 8234,
+                "mengungsi": 456,
+                "korbanJiwa": 3,
+                "rumahRusak": 345,
+                "rumahSakit": 2,
+                "sekolah": 5,
+                "jembatan": 1,
+                "puskesmas": 3,
+                "gedungPemerintah": 1
+            },
+            "respon": {
+                "personil": 85,
+                "unitMedis": 2,
+                "logistik": 8,
+                "dana": 0.3
+            },
+            "progress": {
+                "restorasiRumahSakit": 1,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 78,
+                "restorasiSekolah": 1,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 2,
+                "puskesmasOperasional": 1,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Aceh Jaya": {
+            "province": "Aceh",
+            "dampak": {
+                "totalTerdampak": 7560,
+                "mengungsi": 412,
+                "korbanJiwa": 2,
+                "rumahRusak": 298,
+                "rumahSakit": 1,
+                "sekolah": 4,
+                "jembatan": 1,
+                "puskesmas": 2,
+                "gedungPemerintah": 1
+            },
+            "respon": {
+                "personil": 72,
+                "unitMedis": 1,
+                "logistik": 6,
+                "dana": 0.25
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 65,
+                "restorasiSekolah": 1,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 1,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Aceh Barat": {
+            "province": "Aceh",
+            "dampak": {
+                "totalTerdampak": 6120,
+                "mengungsi": 334,
+                "korbanJiwa": 1,
+                "rumahRusak": 245,
+                "rumahSakit": 1,
+                "sekolah": 3,
+                "jembatan": 0,
+                "puskesmas": 2,
+                "gedungPemerintah": 1
+            },
+            "respon": {
+                "personil": 58,
+                "unitMedis": 1,
+                "logistik": 5,
+                "dana": 0.2
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 52,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 1,
+                "puskesmasOperasional": 1,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Aceh Selatan": {
+            "province": "Aceh",
+            "dampak": {
+                "totalTerdampak": 5340,
+                "mengungsi": 289,
+                "korbanJiwa": 1,
+                "rumahRusak": 212,
+                "rumahSakit": 1,
+                "sekolah": 3,
+                "jembatan": 0,
+                "puskesmas": 2,
+                "gedungPemerintah": 1
+            },
+            "respon": {
+                "personil": 48,
+                "unitMedis": 1,
+                "logistik": 4,
+                "dana": 0.18
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 45,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 1,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 1
+            }
+        },
+        "Aceh Timur": {
+            "province": "Aceh",
+            "dampak": {
+                "totalTerdampak": 5890,
+                "mengungsi": 312,
+                "korbanJiwa": 1,
+                "rumahRusak": 234,
+                "rumahSakit": 1,
+                "sekolah": 4,
+                "jembatan": 0,
+                "puskesmas": 2,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 52,
+                "unitMedis": 1,
+                "logistik": 4,
+                "dana": 0.19
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 48,
+                "restorasiSekolah": 1,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 1,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Aceh Utara": {
+            "province": "Aceh",
+            "dampak": {
+                "totalTerdampak": 6450,
+                "mengungsi": 348,
+                "korbanJiwa": 2,
+                "rumahRusak": 267,
+                "rumahSakit": 1,
+                "sekolah": 4,
+                "jembatan": 1,
+                "puskesmas": 2,
+                "gedungPemerintah": 1
+            },
+            "respon": {
+                "personil": 60,
+                "unitMedis": 1,
+                "logistik": 5,
+                "dana": 0.21
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 56,
+                "restorasiSekolah": 1,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 1,
+                "puskesmasOperasional": 1,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Banda Aceh": {
+            "province": "Aceh",
+            "dampak": {
+                "totalTerdampak": 9010,
+                "mengungsi": 498,
+                "korbanJiwa": 2,
+                "rumahRusak": 378,
+                "rumahSakit": 1,
+                "sekolah": 5,
+                "jembatan": 1,
+                "puskesmas": 2,
+                "gedungPemerintah": 1
+            },
+            "respon": {
+                "personil": 95,
+                "unitMedis": 2,
+                "logistik": 9,
+                "dana": 0.35
+            },
+            "progress": {
+                "restorasiRumahSakit": 1,
+                "rsOperasional": 1,
+                "restorasiRumahTinggal": 112,
+                "restorasiSekolah": 1,
+                "restorasiJembatan": 1,
+                "restorasiPuskesmas": 1,
+                "puskesmasOperasional": 1,
+                "restorasiGedungPemerintah": 1
+            }
+        },
+        "Nias": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 4230,
+                "mengungsi": 215,
+                "korbanJiwa": 1,
+                "rumahRusak": 178,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 42,
+                "unitMedis": 1,
+                "logistik": 3,
+                "dana": 0.14
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 38,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Mandailing Natal": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 5120,
+                "mengungsi": 268,
+                "korbanJiwa": 1,
+                "rumahRusak": 204,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 48,
+                "unitMedis": 1,
+                "logistik": 4,
+                "dana": 0.17
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 42,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Karo": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 7120,
+                "mengungsi": 378,
+                "korbanJiwa": 2,
+                "rumahRusak": 334,
+                "rumahSakit": 0,
+                "sekolah": 1,
+                "jembatan": 0,
+                "puskesmas": 1,
+                "gedungPemerintah": 1
+            },
+            "respon": {
+                "personil": 68,
+                "unitMedis": 2,
+                "logistik": 6,
+                "dana": 0.24
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 72,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 1,
+                "puskesmasOperasional": 1,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Deli Serdang": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 6540,
+                "mengungsi": 342,
+                "korbanJiwa": 2,
+                "rumahRusak": 284,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 1,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 62,
+                "unitMedis": 2,
+                "logistik": 5,
+                "dana": 0.22
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 58,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 1,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Langkat": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 5760,
+                "mengungsi": 298,
+                "korbanJiwa": 1,
+                "rumahRusak": 236,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 54,
+                "unitMedis": 1,
+                "logistik": 4,
+                "dana": 0.19
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 48,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Asahan": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 6210,
+                "mengungsi": 324,
+                "korbanJiwa": 1,
+                "rumahRusak": 268,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 58,
+                "unitMedis": 1,
+                "logistik": 5,
+                "dana": 0.21
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 54,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Simalungun": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 5890,
+                "mengungsi": 305,
+                "korbanJiwa": 1,
+                "rumahRusak": 242,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 55,
+                "unitMedis": 1,
+                "logistik": 4,
+                "dana": 0.19
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 50,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Agam": {
+            "province": "Sumatera Barat",
+            "dampak": {
+                "totalTerdampak": 7890,
+                "mengungsi": 425,
+                "korbanJiwa": 3,
+                "rumahRusak": 356,
+                "rumahSakit": 8,
+                "sekolah": 18,
+                "jembatan": 2,
+                "puskesmas": 10,
+                "gedungPemerintah": 3
+            },
+            "respon": {
+                "personil": 78,
+                "unitMedis": 2,
+                "logistik": 8,
+                "dana": 0.28
+            },
+            "progress": {
+                "restorasiRumahSakit": 1,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 98,
+                "restorasiSekolah": 3,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 3,
+                "puskesmasOperasional": 1,
+                "restorasiGedungPemerintah": 1
+            }
+        },
+        "Padang Pariaman": {
+            "province": "Sumatera Barat",
+            "dampak": {
+                "totalTerdampak": 8340,
+                "mengungsi": 448,
+                "korbanJiwa": 3,
+                "rumahRusak": 384,
+                "rumahSakit": 9,
+                "sekolah": 20,
+                "jembatan": 2,
+                "puskesmas": 11,
+                "gedungPemerintah": 3
+            },
+            "respon": {
+                "personil": 82,
+                "unitMedis": 2,
+                "logistik": 9,
+                "dana": 0.3
+            },
+            "progress": {
+                "restorasiRumahSakit": 1,
+                "rsOperasional": 1,
+                "restorasiRumahTinggal": 105,
+                "restorasiSekolah": 3,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 3,
+                "puskesmasOperasional": 2,
+                "restorasiGedungPemerintah": 1
+            }
+        },
+        "Pasaman": {
+            "province": "Sumatera Barat",
+            "dampak": {
+                "totalTerdampak": 5120,
+                "mengungsi": 276,
+                "korbanJiwa": 1,
+                "rumahRusak": 206,
+                "rumahSakit": 2,
+                "sekolah": 7,
+                "jembatan": 1,
+                "puskesmas": 4,
+                "gedungPemerintah": 1
+            },
+            "respon": {
+                "personil": 48,
+                "unitMedis": 1,
+                "logistik": 4,
+                "dana": 0.17
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 52,
+                "restorasiSekolah": 1,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 1,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Solok": {
+            "province": "Sumatera Barat",
+            "dampak": {
+                "totalTerdampak": 4670,
+                "mengungsi": 251,
+                "korbanJiwa": 1,
+                "rumahRusak": 188,
+                "rumahSakit": 1,
+                "sekolah": 5,
+                "jembatan": 1,
+                "puskesmas": 3,
+                "gedungPemerintah": 1
+            },
+            "respon": {
+                "personil": 44,
+                "unitMedis": 1,
+                "logistik": 3,
+                "dana": 0.15
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 48,
+                "restorasiSekolah": 1,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 1,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Tanah Datar": {
+            "province": "Sumatera Barat",
+            "dampak": {
+                "totalTerdampak": 7120,
+                "mengungsi": 382,
+                "korbanJiwa": 2,
+                "rumahRusak": 312,
+                "rumahSakit": 1,
+                "sekolah": 3,
+                "jembatan": 1,
+                "puskesmas": 1,
+                "gedungPemerintah": 1
+            },
+            "respon": {
+                "personil": 68,
+                "unitMedis": 2,
+                "logistik": 6,
+                "dana": 0.24
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 68,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 1,
+                "restorasiPuskesmas": 1,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Padang": {
+            "province": "Sumatera Barat",
+            "dampak": {
+                "totalTerdampak": 9560,
+                "mengungsi": 512,
+                "korbanJiwa": 4,
+                "rumahRusak": 446,
+                "rumahSakit": 1,
+                "sekolah": 2,
+                "jembatan": 0,
+                "puskesmas": 1,
+                "gedungPemerintah": 1
+            },
+            "respon": {
+                "personil": 92,
+                "unitMedis": 2,
+                "logistik": 10,
+                "dana": 0.32
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 104,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Tapanuli Selatan": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 3870,
+                "mengungsi": 198,
+                "korbanJiwa": 1,
+                "rumahRusak": 152,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 36,
+                "unitMedis": 1,
+                "logistik": 3,
+                "dana": 0.13
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 32,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Tapanuli Tengah": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 2980,
+                "mengungsi": 152,
+                "korbanJiwa": 0,
+                "rumahRusak": 108,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 28,
+                "unitMedis": 1,
+                "logistik": 2,
+                "dana": 0.1
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 24,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Tapanuli Utara": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 4450,
+                "mengungsi": 228,
+                "korbanJiwa": 1,
+                "rumahRusak": 182,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 1,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 42,
+                "unitMedis": 1,
+                "logistik": 4,
+                "dana": 0.15
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 38,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Toba Samosir": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 1560,
+                "mengungsi": 78,
+                "korbanJiwa": 0,
+                "rumahRusak": 46,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 18,
+                "unitMedis": 0,
+                "logistik": 1,
+                "dana": 0.05
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 12,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Labuhan Batu": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 5340,
+                "mengungsi": 278,
+                "korbanJiwa": 1,
+                "rumahRusak": 224,
+                "rumahSakit": 0,
+                "sekolah": 1,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 52,
+                "unitMedis": 1,
+                "logistik": 4,
+                "dana": 0.18
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 46,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Dairi": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 3670,
+                "mengungsi": 188,
+                "korbanJiwa": 1,
+                "rumahRusak": 136,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 34,
+                "unitMedis": 1,
+                "logistik": 3,
+                "dana": 0.12
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 28,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Nias Selatan": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 4010,
+                "mengungsi": 206,
+                "korbanJiwa": 0,
+                "rumahRusak": 168,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 38,
+                "unitMedis": 1,
+                "logistik": 3,
+                "dana": 0.13
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 34,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Humbang Hasundutan": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 6050,
+                "mengungsi": 315,
+                "korbanJiwa": 2,
+                "rumahRusak": 288,
+                "rumahSakit": 0,
+                "sekolah": 1,
+                "jembatan": 0,
+                "puskesmas": 1,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 58,
+                "unitMedis": 1,
+                "logistik": 5,
+                "dana": 0.2
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 62,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 1,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Pakpak Bharat": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 1890,
+                "mengungsi": 96,
+                "korbanJiwa": 0,
+                "rumahRusak": 62,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 22,
+                "unitMedis": 0,
+                "logistik": 2,
+                "dana": 0.06
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 14,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Samosir": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 2010,
+                "mengungsi": 102,
+                "korbanJiwa": 0,
+                "rumahRusak": 76,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 24,
+                "unitMedis": 0,
+                "logistik": 2,
+                "dana": 0.07
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 16,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Serdang Bedagai": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 4780,
+                "mengungsi": 245,
+                "korbanJiwa": 1,
+                "rumahRusak": 190,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 1,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 46,
+                "unitMedis": 1,
+                "logistik": 4,
+                "dana": 0.16
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 40,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Batu Bara": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 4230,
+                "mengungsi": 218,
+                "korbanJiwa": 1,
+                "rumahRusak": 174,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 40,
+                "unitMedis": 1,
+                "logistik": 3,
+                "dana": 0.14
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 36,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Padang Lawas Utara": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 3560,
+                "mengungsi": 182,
+                "korbanJiwa": 1,
+                "rumahRusak": 142,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 34,
+                "unitMedis": 1,
+                "logistik": 3,
+                "dana": 0.12
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 30,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Padang Lawas": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 3920,
+                "mengungsi": 201,
+                "korbanJiwa": 1,
+                "rumahRusak": 156,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 38,
+                "unitMedis": 1,
+                "logistik": 3,
+                "dana": 0.13
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 32,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Labuhan Batu Selatan": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 4450,
+                "mengungsi": 228,
+                "korbanJiwa": 1,
+                "rumahRusak": 182,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 42,
+                "unitMedis": 1,
+                "logistik": 4,
+                "dana": 0.15
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 38,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Labuhan Batu Utara": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 4670,
+                "mengungsi": 240,
+                "korbanJiwa": 1,
+                "rumahRusak": 192,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 1,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 44,
+                "unitMedis": 1,
+                "logistik": 4,
+                "dana": 0.16
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 40,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Nias Utara": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 3780,
+                "mengungsi": 194,
+                "korbanJiwa": 1,
+                "rumahRusak": 146,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 36,
+                "unitMedis": 1,
+                "logistik": 3,
+                "dana": 0.13
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 30,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        },
+        "Nias Barat": {
+            "province": "Sumatera Utara",
+            "dampak": {
+                "totalTerdampak": 2450,
+                "mengungsi": 125,
+                "korbanJiwa": 0,
+                "rumahRusak": 84,
+                "rumahSakit": 0,
+                "sekolah": 0,
+                "jembatan": 0,
+                "puskesmas": 0,
+                "gedungPemerintah": 0
+            },
+            "respon": {
+                "personil": 26,
+                "unitMedis": 0,
+                "logistik": 2,
+                "dana": 0.08
+            },
+            "progress": {
+                "restorasiRumahSakit": 0,
+                "rsOperasional": 0,
+                "restorasiRumahTinggal": 18,
+                "restorasiSekolah": 0,
+                "restorasiJembatan": 0,
+                "restorasiPuskesmas": 0,
+                "puskesmasOperasional": 0,
+                "restorasiGedungPemerintah": 0
+            }
+        }
+    }
+}

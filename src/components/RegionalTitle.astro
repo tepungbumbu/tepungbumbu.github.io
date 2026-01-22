@@ -1,0 +1,106 @@
+<div class="w-full sticky top-15 lg:top-[72px] z-40 bg-white backdrop-blur-2xl py-4">
+    <div class="content-wrapper">
+        <h3 id="regional-title" class="font-bold"></h3>
+    </div>
+</div>
+
+<style>
+    #regional-title {
+        span {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+    }
+    #regional-title {
+        span:hover {
+            color: #203369;
+        }
+    }
+  .breadcrumb-segment {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+  
+  .breadcrumb-segment:hover {
+    opacity: 0.7;
+    text-decoration: underline;
+  }
+  
+  .breadcrumb-separator {
+    margin: 0 12px;
+    color: #666;
+    font-weight: normal;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const titleElement = document.getElementById('regional-title');
+    
+    if (!titleElement) return;
+
+    let currentProvince: string | null = null;
+    let currentRegency: string | null = null;
+
+    function renderBreadcrumb() {
+      titleElement.innerHTML = '';
+      
+      // Regional Sumatera segment (always clickable if not at root)
+      const regionalSegment = document.createElement('span');
+      regionalSegment.textContent = 'REGIONAL SUMATERA';
+      if (currentProvince || currentRegency) {
+        regionalSegment.className = 'breadcrumb-segment';
+        regionalSegment.addEventListener('click', () => {
+          window.dispatchEvent(new CustomEvent('breadcrumb-navigate', {
+            detail: { level: 'regional' }
+          }));
+        });
+      }
+      titleElement.appendChild(regionalSegment);
+      
+      // Province segment
+      if (currentProvince) {
+        const separator1 = document.createElement('span');
+        separator1.className = 'breadcrumb-separator';
+        separator1.textContent = ' / ';
+        titleElement.appendChild(separator1);
+        
+        const provinceSegment = document.createElement('span');
+        provinceSegment.textContent = currentProvince.toUpperCase();
+        if (currentRegency) {
+          provinceSegment.className = 'breadcrumb-segment';
+          provinceSegment.addEventListener('click', () => {
+            window.dispatchEvent(new CustomEvent('breadcrumb-navigate', {
+              detail: { level: 'province', province: currentProvince }
+            }));
+          });
+        }
+        titleElement.appendChild(provinceSegment);
+      }
+      
+      // Regency segment
+      if (currentRegency) {
+        const separator2 = document.createElement('span');
+        separator2.className = 'breadcrumb-separator';
+        separator2.textContent = ' / ';
+        titleElement.appendChild(separator2);
+        
+        const regencySegment = document.createElement('span');
+        regencySegment.textContent = currentRegency.toUpperCase();
+        titleElement.appendChild(regencySegment);
+      }
+    }
+
+    window.addEventListener('breadcrumb-update', ((e: CustomEvent) => {
+      const { province, regency } = e.detail;
+      currentProvince = province;
+      currentRegency = regency;
+      renderBreadcrumb();
+    }) as EventListener);
+    
+    // Initial render
+    renderBreadcrumb();
+  });
+</script>

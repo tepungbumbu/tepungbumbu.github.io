@@ -1,0 +1,44 @@
+<section class="min-h-screen lg:min-h-[600px] bg-[#203369] relative flex items-center w-full">
+     <div class="absolute inset-0 h-full w-full">
+            <video autoplay="" loop="" playsinline="" class="w-full h-full object-cover opacity-60 mix-blend-overlay">
+                <source src="https://videos.pexels.com/video-files/34250830/14513290_2560_1440_24fps.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="absolute inset-0 bg-linear-to-t from-[#203369] via-[#203369]/20 to-transparent"></div>
+    </div>
+    <div class="content-wrapper relative z-10 w-full">
+       <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-12 items-center w-full">
+        <!-- Left Content -->
+        <div class="text-white">
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm text-white text-[10px] sm:text-xs font-bold uppercase tracking-widest rounded-full mb-6 border border-white/20">
+                <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                Jaga Indonesia
+            </span>
+            
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6">
+                <span class="font-bold">Dari Bencana</span><br>
+                <span class="font-bold text-amber-400">ke Pemulihan</span>
+            </h1>
+            
+            <p class="text-white/80 text-base sm:text-lg mb-8 max-w-md">
+                Melihat perubahan nyata penanganan dan pemulihan infrastruktur di Sumatera
+            </p>
+            
+            <a href="#progres" class="inline-flex items-center gap-2 text-amber-400 font-bold text-sm uppercase tracking-wide hover:text-amber-300">
+                Lihat Progres Pemulihan
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                </svg>
+            </a>
+        </div>
+        
+        <!-- Right Content - Video Card -->
+        <div class="relative rounded-lg overflow-hidden shadow-2xl">
+            <!-- Video/Image -->
+            <div class="relative aspect-video bg-gray-900">
+                <iframe class="w-full h-full" src="https://20.detik.com/embed/260120205" frameborder="0" width="420" scrolling="no" allowfullscreen="true" height="236"></iframe>
+            </div>
+        </div>
+       </div>
+    </div>
+</section>

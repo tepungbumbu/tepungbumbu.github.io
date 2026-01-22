@@ -1,0 +1,42 @@
+---
+import "@/styles/globals.css"
+
+import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts"
+
+import BaseHead from "@/components/BaseHead.astro"
+import Footer from "@/components/Footer.astro"
+import Header from "@/components/Header.astro"
+
+interface Props {
+    title?: string
+    description?: string
+}
+
+const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props
+---
+
+<html lang="id" class="scroll-smooth scroll-p-[140px]">
+    <head>
+        <BaseHead title={title} description={description} />
+    </head>
+    <body class="flex min-h-screen flex-col bg-white">
+        <Header />
+        <main class="isolate w-full flex-1">
+            <slot />
+            <div class="content-wrapper mb-8">
+                <div class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8">
+                    <div class="flex flex-col gap-8 relative">
+                        <slot name="left-content"></slot>
+                    </div>
+                    <div class="flex flex-col gap-8">
+                        <div class="sticky top-24">
+                            <slot name="right-content"></slot>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <slot name="bottom"></slot>
+        </main>
+        <Footer />
+    </body>
+</html>

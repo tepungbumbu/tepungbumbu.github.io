@@ -1,0 +1,1189 @@
+---
+import regionalData from '@/data/regional-data.json';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+// Function to determine impact level based on total affected
+function getImpactLevel(terdampak: number): 'Rendah' | 'Sedang' | 'Tinggi' | 'Kritis' {
+  if (terdampak >= 8000) return 'Kritis';
+  if (terdampak >= 6000) return 'Tinggi';
+  if (terdampak >= 3000) return 'Sedang';
+  return 'Rendah';
+}
+
+// Transform regional-data.json regencies into the format needed for map tooltips
+const regencyData: Record<string, { 
+  level: 'Rendah' | 'Sedang' | 'Tinggi' | 'Kritis'; 
+  terdampak: number; 
+  rumahRusak: number;
+}> = {};
+
+if (regionalData && regionalData.regencies) {
+  for (const [name, data] of Object.entries(regionalData.regencies)) {
+    regencyData[name] = {
+      level: getImpactLevel(data.dampak.totalTerdampak),
+      terdampak: data.dampak.totalTerdampak,
+      rumahRusak: data.dampak.rumahRusak
+    };
+  }
+}
+
+// Transform province data from regional-data.json
+const provinceData: Record<string, { 
+  level: 'Rendah' | 'Sedang' | 'Tinggi' | 'Kritis'; 
+  description: string;
+  terdampak: number; 
+  rumahRusak: number;
+}> = {};
+
+if (regionalData && regionalData.provinces) {
+  for (const [name, data] of Object.entries(regionalData.provinces)) {
+    provinceData[name] = {
+      level: getImpactLevel(data.dampak.totalTerdampak),
+      description: `${data.dampak.korbanJiwa} korban jiwa, ${data.dampak.mengungsi.toLocaleString()} mengungsi`,
+      terdampak: data.dampak.totalTerdampak,
+      rumahRusak: data.dampak.rumahRusak
+    };
+  }
+}
+---
+
+<div id="map" class:list={["map-container", className]}></div>
+<button id="back-button" class="back-button" style="display: none;">
+  ← Kembali ke Regional
+</button>
+<div id="zoom-controls" class="zoom-controls">
+  <button id="zoom-in" class="zoom-btn" title="Zoom in">+</button>
+  <button id="zoom-out" class="zoom-btn" title="Zoom out">−</button>
+  <button id="reset-view-button" class="reset-view-button" style="display: none;" title="Pusatkan Peta">
+    ↻
+  </button>
+</div>
+<div id="legend" class="legend">
+  <h4>TINGKAT KEPARAHAN DAMPAK</h4>
+  <div class="legend-item"><span class="legend-color" style="background: #d4edda"></span> Rendah</div>
+  <div class="legend-item"><span class="legend-color" style="background: #f5b041"></span> Sedang</div>
+  <div class="legend-item"><span class="legend-color" style="background: #e74c3c"></span> Tinggi</div>
+  <div class="legend-item"><span class="legend-color" style="background: #a93226"></span> Kritis</div>
+</div>
+
+<!-- Mobile info panel -->
+<div id="mobile-info-panel" class="mobile-info-panel" style="display: none;">
+  <div class="mobile-info-header">
+    <h4 id="mobile-region-name">Pilih Wilayah</h4>
+    <button id="close-mobile-info" class="close-mobile-info" aria-label="Close">×</button>
+  </div>
+  <div id="mobile-info-content" class="mobile-info-content">
+    <p style="color: #999; font-size: 13px;">Ketuk wilayah untuk melihat informasi</p>
+  </div>
+</div>
+
+<style>
+  .map-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 0;
+    background-color: #f5f5f5;
+    min-height: 635px;
+  }
+
+  /* Remove blue outline/border on click */
+  .map-container :global(svg) {
+    outline: none !important;
+  }
+
+  .map-container :global(path) {
+    outline: none !important;
+  }
+
+  .map-container :global(.leaflet-overlay-pane svg) {
+    outline: none !important;
+  }
+
+  .back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+    font-family: ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .back-button:hover {
+    background: #f0f0f0;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.3);
+  }
+
+  .reset-view-button {
+    width: 34px;
+    height: 34px;
+    background: white;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border-radius: 0 0 6px 6px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .reset-view-button:hover {
+    background: #f0f0f0;
+  }
+
+  .reset-view-button:active {
+    background: #e0e0e0;
+  }
+
+  .zoom-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 11;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .zoom-btn {
+    width: 34px;
+    height: 34px;
+    background: white;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .zoom-btn:first-child {
+    border-radius: 6px 6px 0 0;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .zoom-btn:nth-child(2) {
+    border-bottom: 1px solid #ccc;
+  }
+
+  .zoom-btn:hover {
+    background: #f0f0f0;
+  }
+
+  .zoom-btn:active {
+    background: #e0e0e0;
+  }
+
+  .legend {
+    position: absolute;
+    top: 520px;
+    left: 10px;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1;
+    font-family: ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 12px;
+  }
+
+  .legend h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    grid-column: 1 / -1;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  .legend-color {
+    width: 15px;
+    height: 15px;
+    margin-right: 8px;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .info {
+    display: none;
+  }
+
+  .info h4 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .info-content {
+    margin: 0;
+    font-size: 13px;
+    color: #666;
+  }
+
+  /* Mobile info panel */
+  .mobile-info-panel {
+    position: absolute;
+    top: 393px;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    z-index: 1;
+    font-family: ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    max-height: 40vh;
+    transition: transform 0.3s ease;
+    -webkit-transition: transform 0.3s ease;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .mobile-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .mobile-info-header h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .close-mobile-info {
+    background: transparent;
+    border: none;
+    font-size: 28px;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .close-mobile-info:active {
+    color: #333;
+    background: #f0f0f0;
+    border-radius: 50%;
+  }
+
+  .mobile-info-content {
+    padding: 16px 20px;
+    padding-bottom: 24px;
+    font-size: 14px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-info-content table {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .mobile-info-content td {
+    padding: 6px 0;
+  }
+
+  .mobile-info-content td:first-child {
+    color: #666;
+  }
+
+  .mobile-info-content td:last-child {
+    text-align: right;
+    font-weight: bold;
+  }
+
+  /* Custom tooltip styles with close button */
+  :global(.custom-tooltip.touch-tooltip) {
+    pointer-events: auto !important;
+  }
+
+  :global(.custom-tooltip .tooltip-close) {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    background: rgba(73, 73, 73, 0.95);
+    border: 1px solid rgba(0,0,0,0.1);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 18px;
+    color: #ffffff;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    z-index: 10;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  :global(.custom-tooltip.touch-tooltip .tooltip-close) {
+    display: flex;
+  }
+
+  :global(.custom-tooltip .tooltip-close:hover) {
+    background: rgba(0,0,0,0.2);
+    color: #333;
+  }
+
+  @media (max-width: 768px) {
+
+    .map-container {
+        min-height: 560px;
+    }
+    .legend {
+      font-size: 12px;
+      padding: 10px;
+      bottom: auto;
+      top: 495px;
+      left: 10px;
+      right: auto;
+      max-width: 100%;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px 8px;
+    }
+
+    .legend h4 {
+      font-size: 10px;
+      margin: 0;
+    }
+    .legend-item {
+        font-size: 10px;
+    }
+
+    .legend-color {
+        margin-right: 3px;
+    }
+
+    .back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+    font-family: ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 10px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+    .info {
+      font-size: 12px;
+      padding: 10px;
+    }
+
+    .info h4 {
+      font-size: 12px;
+    }
+
+    .zoom-controls {
+      top: 15px;
+    }
+
+    .zoom-btn,
+    .reset-view-button {
+      width: 30px;
+      height: 30px;
+      font-size: 18px;
+    }
+  }
+</style>
+
+<script define:vars={{ regencyData, provinceData }} is:inline>
+  // Pass data to global scope for use in module script
+  window.regencyDataGlobal = regencyData;
+  window.provinceDataGlobal = provinceData;
+  console.log('Data prepared:', Object.keys(regencyData || {}).length, 'regencies,', Object.keys(provinceData || {}).length, 'provinces');
+</script>
+
+<script>
+  import L from 'leaflet';
+  import 'leaflet/dist/leaflet.css';
+
+  // Access data from global scope
+  const regencyData = window.regencyDataGlobal;
+  const disasterData = window.provinceDataGlobal;
+
+  // regencyData is now passed from frontmatter via define:vars
+
+
+  // Color mapping for regency impact levels
+  const regencyColors: Record<string, string> = {
+    'Rendah': '#e0f2f1',    // Light green
+    'Sedang': '#f6b832',    // Orange/Yellow
+    'Tinggi': '#ef4444',    // Red
+    'Kritis': '#991b1b'     // Dark red
+  };
+
+  // Wait for DOM to be ready
+  document.addEventListener('DOMContentLoaded', () => {
+    // Detect mobile viewport
+    const isMobile = window.innerWidth <= 768;
+    
+    // Initial map center and zoom - different for mobile and desktop
+    const INITIAL_CENTER: [number, number] = isMobile ? [0.5, 98.5] : [1.5, 98.0];
+    const INITIAL_ZOOM = isMobile ? 6.2 : 6.5;
+
+    // Initialize map centered on Sumatra (adjusted for better centering)
+    const map = L.map('map', {
+      zoomControl: false,
+      attributionControl: false,
+      zoom: 6.5,           // Initial zoom
+      minZoom: 5,          // Minimum zoom level
+      maxZoom: 10,         // Maximum zoom level
+      zoomDelta: 0.5,      // Finer zoom control
+      zoomSnap: 0.5,  
+      scrollWheelZoom: false
+    }).setView(INITIAL_CENTER, INITIAL_ZOOM);
+
+    // No tile layer - just plain background
+    // The background color is set via CSS on .map-container
+
+    // Info control update function
+    const infoContent = document.querySelector('.info-content');
+    const backButton = document.getElementById('back-button');
+    const resetViewButton = document.getElementById('reset-view-button');
+    const zoomInBtn = document.getElementById('zoom-in');
+    const zoomOutBtn = document.getElementById('zoom-out');
+    
+    // Mobile info panel elements
+    const mobileInfoPanel = document.getElementById('mobile-info-panel');
+    const mobileRegionName = document.getElementById('mobile-region-name');
+    const mobileInfoContent = document.getElementById('mobile-info-content');
+    const closeMobileInfo = document.getElementById('close-mobile-info');
+    
+    // Touch device detection
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    // Track currently open tooltip for mobile
+    let currentOpenTooltip: L.Tooltip | null = null;
+    let currentHighlightedLayer: L.Layer | null = null;
+    
+    // Close mobile info panel handler
+    if (closeMobileInfo) {
+      closeMobileInfo.addEventListener('click', () => {
+        if (mobileInfoPanel) {
+          mobileInfoPanel.style.display = 'none';
+        }
+      });
+    }
+
+    // Function to update zoom-out button styling based on reset button visibility
+    function updateZoomOutStyle() {
+      if (zoomOutBtn && resetViewButton) {
+        if (resetViewButton.style.display === 'none' || !resetViewButton.style.display) {
+          // Reset button is hidden, zoom-out is the last button
+          zoomOutBtn.style.borderRadius = '0 0 6px 6px';
+          zoomOutBtn.style.borderBottom = 'none';
+        } else {
+          // Reset button is visible, zoom-out is middle button
+          zoomOutBtn.style.borderRadius = '0';
+          zoomOutBtn.style.borderBottom = '1px solid #ccc';
+        }
+      }
+    }
+
+    // Function to check if map view has changed from initial
+    function checkViewChanged() {
+      if (currentView === 'province') {
+        const center = map.getCenter();
+        const zoom = map.getZoom();
+        
+        // Check if center or zoom has changed significantly from initial province view
+        const centerChanged = Math.abs(center.lat - INITIAL_CENTER[0]) > 0.1 || 
+                             Math.abs(center.lng - INITIAL_CENTER[1]) > 0.1;
+        const zoomChanged = Math.abs(zoom - INITIAL_ZOOM) > 0.2;
+        
+        if (resetViewButton) {
+          if (centerChanged || zoomChanged) {
+            resetViewButton.style.display = 'block';
+          } else {
+            resetViewButton.style.display = 'none';
+          }
+        }
+      } else if (currentView === 'regency' && regencyInitialBounds) {
+        // Check if view has changed from initial regency bounds
+        const currentBounds = map.getBounds();
+        const boundsChanged = !regencyInitialBounds.equals(currentBounds);
+        
+        if (resetViewButton) {
+          if (boundsChanged) {
+            resetViewButton.style.display = 'block';
+          } else {
+            resetViewButton.style.display = 'none';
+          }
+        }
+      } else if (resetViewButton) {
+        resetViewButton.style.display = 'none';
+      }
+      
+      // Update zoom-out button styling
+      updateZoomOutStyle();
+    }
+
+    // Reset view button handler
+    if (resetViewButton) {
+      resetViewButton.addEventListener('click', () => {
+        if (currentView === 'province') {
+          map.setView(INITIAL_CENTER, INITIAL_ZOOM, { animate: true });
+        } else if (currentView === 'regency' && regencyInitialBounds) {
+          map.fitBounds(regencyInitialBounds, { animate: true });
+        }
+      });
+    }
+
+    // Listen to map move and zoom events
+    map.on('moveend', checkViewChanged);
+    map.on('zoomend', checkViewChanged);
+    
+    // Set initial zoom-out button styling
+    updateZoomOutStyle();
+
+    // Zoom button handlers
+    if (zoomInBtn) {
+      zoomInBtn.addEventListener('click', () => {
+        map.zoomIn();
+      });
+    }
+
+    if (zoomOutBtn) {
+      zoomOutBtn.addEventListener('click', () => {
+        map.zoomOut();
+      });
+    }
+
+    // Track current view state
+    let currentView: 'province' | 'regency' = 'province';
+    let currentProvince: string | null = null;
+    let regencyLayers: L.LayerGroup | null = null;
+    let regencyInitialBounds: L.LatLngBounds | null = null;
+
+    // Function to get color based on impact level (provinces)
+    function getColor(provinceName: string): string {
+      const data = disasterData[provinceName];
+      return data ? regencyColors[data.level] : '#95a5a6'; // Default gray for unknown
+    }
+
+    // Function to get color for regencies
+    function getRegencyColor(regencyName: string): string {
+      const data = regencyData[regencyName];
+      return data ? regencyColors[data.level] : '#95a5a6';
+    }
+
+    // Function to style province features
+    function styleProvince(feature: any) {
+      const provinceName = feature.properties.NAME_1 || feature.properties.name;
+      return {
+        fillColor: getColor(provinceName),
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        fillOpacity: 1
+      };
+    }
+
+    // Function to style regency features
+    function styleRegency(feature: any) {
+      const regencyName = feature.properties.NAME_2 || feature.properties.name;
+      return {
+        fillColor: getRegencyColor(regencyName),
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        fillOpacity: 1
+      };
+    }
+
+    // Highlight feature on hover
+    function highlightFeature(e: L.LeafletMouseEvent) {
+      const layer = e.target;
+      
+      layer.setStyle({
+        weight: 3,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 1
+      });
+
+      layer.bringToFront();
+
+      // Update info box based on current view
+      if (currentView === 'province') {
+        const provinceName = layer.feature.properties.NAME_1 || layer.feature.properties.name;
+        const data = disasterData[provinceName];
+        
+        if (infoContent && data) {
+          infoContent.innerHTML = `
+            <strong>${provinceName}</strong><br/>
+            Tingkat Dampak: <strong style="color: ${regencyColors[data.level]}">${data.level}</strong><br/>
+            <small>${data.description}</small><br/>
+            <small style="color: #666;"><em>Klik untuk melihat kabupaten</em></small>
+          `;
+        } else if (infoContent) {
+          infoContent.innerHTML = `<strong>${provinceName}</strong><br/>Data tidak tersedia`;
+        }
+      } else {
+        const regencyName = layer.feature.properties.NAME_2 || layer.feature.properties.name;
+        const data = regencyData[regencyName];
+        
+        if (infoContent && data) {
+          infoContent.innerHTML = `
+            <strong>${regencyName}</strong><br/>
+            Tingkat: <strong style="color: ${regencyColors[data.level]}">${data.level}</strong><br/>
+            Terdampak: <strong>${data.terdampak}</strong><br/>
+            Rumah Rusak: <strong>${data.rumahRusak}</strong>
+          `;
+        } else if (infoContent) {
+          infoContent.innerHTML = `<strong>${regencyName}</strong><br/>Data tidak tersedia`;
+        }
+      }
+    }
+
+    // Reset highlight
+    function resetHighlight(e: L.LeafletMouseEvent, isProvince: boolean = true) {
+      const layer = e.target;
+      if (isProvince) {
+        layer.setStyle(styleProvince(layer.feature));
+      } else {
+        layer.setStyle(styleRegency(layer.feature));
+      }
+
+      if (infoContent) {
+        infoContent.innerHTML = currentView === 'province' 
+          ? 'Arahkan kursor ke provinsi' 
+          : 'Arahkan kursor ke kabupaten';
+      }
+    }
+
+    // Load regencies for a province
+    async function loadRegencies(provinceName: string) {
+      // Clear existing regency layers
+      if (regencyLayers) {
+        map.removeLayer(regencyLayers);
+      }
+
+      // Map province names to regency files
+      const regencyFiles: Record<string, string> = {
+        'Sumatera Utara': '/src/data/sumatera_utara_regencies.geojson',
+        'Aceh': '/src/data/aceh_regencies.geojson',
+        'Sumatera Barat': '/src/data/sumbar_regencies.geojson'
+      };
+
+      const file = regencyFiles[provinceName];
+      if (!file) {
+        console.warn(`No regency file found for ${provinceName}`);
+        return;
+      }
+
+      try {
+        const response = await fetch(file);
+        const data = await response.json();
+        
+        regencyLayers = L.geoJSON(data, {
+          style: styleRegency,
+          onEachFeature: (feature: any, layer: L.Layer) => {
+            const regencyName = feature.properties.NAME_2 || feature.properties.name;
+            const regData = regencyData[regencyName];
+
+            // Add tooltip for regencies
+            if (regData) {
+              const tooltipClassName = isTouchDevice || isMobile ? 'custom-tooltip touch-tooltip' : 'custom-tooltip';
+              const closeBtn = isTouchDevice || isMobile ? '<button class="tooltip-close" aria-label="Close">×</button>' : '';
+              
+              const tooltip = L.tooltip({
+                permanent: false,
+                sticky: true,
+                className: tooltipClassName,
+                offset: [10, 0]
+              }).setContent(`
+                <div style="font-family: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif; min-width: 160px; position: relative;">
+                  ${closeBtn}
+                  <h3 style="margin: 0 0 8px 0; font-size: 15px; font-weight: bold; border-bottom: 1px solid #bbbbbb; padding-bottom: 5px;">
+                    ${regencyName}
+                  </h3>
+                  <table style="width: 100%; font-size: 13px;">
+                    <tr>
+                      <td style="padding: 3px 0; color: #666;">Terdampak</td>
+                      <td style="padding: 3px 0; text-align: right; font-weight: bold;">${regData.terdampak.toLocaleString()}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 3px 0; color: #666;">Rumah Rusak</td>
+                      <td style="padding: 3px 0; text-align: right; font-weight: bold;">${regData.rumahRusak.toLocaleString()}</td>
+                    </tr>
+                  </table>
+                </div>
+              `);
+              (layer as any).bindTooltip(tooltip);
+            }
+
+            // Add hover and click events - different behavior for touch vs desktop
+            if (isTouchDevice || isMobile) {
+              // Mobile: tap to show tooltip
+              layer.on({
+                click: (e: L.LeafletMouseEvent) => {
+                  L.DomEvent.stopPropagation(e);
+                  
+                  // Update breadcrumb with regency name
+                  window.dispatchEvent(new CustomEvent('breadcrumb-update', {
+                    detail: { province: currentProvince, regency: regencyName }
+                  }));
+                  
+                  // Dispatch event to update data components with regency data
+                  window.dispatchEvent(new CustomEvent('region-data-update', {
+                    detail: { level: 'regency', province: currentProvince, regency: regencyName }
+                  }));
+                  
+                  // Highlight the region
+                  if (currentHighlightedLayer && currentHighlightedLayer !== layer) {
+                    (currentHighlightedLayer as any).setStyle(styleRegency((currentHighlightedLayer as any).feature));
+                    // Close any open tooltip
+                    if (currentOpenTooltip) {
+                      map.closeTooltip(currentOpenTooltip);
+                    }
+                  }
+                  highlightFeature(e);
+                  currentHighlightedLayer = layer;
+                  
+                  // Open the tooltip
+                  const tooltipInstance = (layer as any).getTooltip();
+                  if (tooltipInstance) {
+                    (layer as any).openTooltip(e.latlng);
+                    currentOpenTooltip = tooltipInstance;
+                    
+                    // Add close button handler
+                    setTimeout(() => {
+                      const closeBtn = document.querySelector('.custom-tooltip .tooltip-close');
+                      if (closeBtn) {
+                        closeBtn.addEventListener('click', (evt) => {
+                          evt.stopPropagation();
+                          map.closeTooltip(tooltipInstance);
+                          currentOpenTooltip = null;
+                          if (currentHighlightedLayer) {
+                            (currentHighlightedLayer as any).setStyle(styleRegency((currentHighlightedLayer as any).feature));
+                            currentHighlightedLayer = null;
+                          }
+                          // Reset breadcrumb to just province when closing regency tooltip
+                          window.dispatchEvent(new CustomEvent('breadcrumb-update', {
+                            detail: { province: currentProvince, regency: null }
+                          }));
+                          // Reset data to province level
+                          window.dispatchEvent(new CustomEvent('region-data-update', {
+                            detail: { level: 'province', province: currentProvince, regency: null }
+                          }));
+                        });
+                      }
+                    }, 50);
+                  }
+                }
+              });
+            } else {
+              // Desktop: keep hover behavior + click to zoom
+              layer.on({
+                mouseover: highlightFeature,
+                mouseout: (e: L.LeafletMouseEvent) => resetHighlight(e, false),
+                click: (e: L.LeafletMouseEvent) => {
+                  // Update breadcrumb with regency name
+                  window.dispatchEvent(new CustomEvent('breadcrumb-update', {
+                    detail: { province: currentProvince, regency: regencyName }
+                  }));
+                  // Dispatch event to update data components with regency data
+                  window.dispatchEvent(new CustomEvent('region-data-update', {
+                    detail: { level: 'regency', province: currentProvince, regency: regencyName }
+                  }));
+                  map.fitBounds(e.target.getBounds());
+                }
+              });
+            }
+          }
+        }).addTo(map);
+
+        currentView = 'regency';
+        currentProvince = provinceName;
+        
+        // Store initial regency bounds for reset functionality
+        // Use featureGroup to access getBounds method
+        const featureGroup = L.featureGroup([regencyLayers]);
+        regencyInitialBounds = featureGroup.getBounds();
+
+        // Dispatch breadcrumb update event
+        window.dispatchEvent(new CustomEvent('breadcrumb-update', {
+          detail: { province: provinceName, regency: null }
+        }));
+
+        // Update info label and show back button
+        if (infoContent) {
+          infoContent.innerHTML = 'Arahkan kursor ke kabupaten';
+        }
+        if (backButton) {
+          backButton.style.display = 'block';
+        }
+        
+        // Hide reset button initially, will show when view changes
+        if (resetViewButton) {
+          resetViewButton.style.display = 'none';
+        }
+        updateZoomOutStyle();
+      } catch (error) {
+        console.error(`Error loading regencies for ${provinceName}:`, error);
+      }
+    }
+
+    // Click handler for provinces
+    function onProvinceClick(e: L.LeafletMouseEvent) {
+      const provinceName = e.target.feature.properties.NAME_1 || e.target.feature.properties.name;
+      
+      // Dispatch event to update data components
+      window.dispatchEvent(new CustomEvent('region-data-update', {
+        detail: { level: 'province', province: provinceName, regency: null }
+      }));
+      
+      // Hide province layers and load regencies
+      provinceLayers.forEach(layer => {
+        map.removeLayer(layer);
+      });
+
+      loadRegencies(provinceName);
+      map.fitBounds(e.target.getBounds());
+    }
+
+    // Back button handler
+    function backToProvinces() {
+      // Remove regency layers
+      if (regencyLayers) {
+        map.removeLayer(regencyLayers);
+        regencyLayers = null;
+      }
+
+      // Show province layers again
+      provinceLayers.forEach(layer => {
+        map.addLayer(layer);
+      });
+
+      // Reset view
+      currentView = 'province';
+      currentProvince = null;
+      regencyInitialBounds = null;
+
+      // Dispatch breadcrumb update event to reset to regional only
+      window.dispatchEvent(new CustomEvent('breadcrumb-update', {
+        detail: { province: null, regency: null }
+      }));
+      
+      // Dispatch event to update data components back to regional level
+      window.dispatchEvent(new CustomEvent('region-data-update', {
+        detail: { level: 'regional', province: null, regency: null }
+      }));
+
+      // Update UI
+      if (infoContent) {
+        infoContent.innerHTML = 'Arahkan kursor ke provinsi';
+      }
+      if (backButton) {
+        backButton.style.display = 'none';
+      }
+
+      // Reset map view to show all provinces (same as initial load)
+      map.setView(INITIAL_CENTER, INITIAL_ZOOM);
+      
+      // Hide reset view button
+      if (resetViewButton) {
+        resetViewButton.style.display = 'none';
+      }
+      
+      // Update zoom-out button styling
+      updateZoomOutStyle();
+    }
+
+    // Attach back button event
+    if (backButton) {
+      backButton.addEventListener('click', backToProvinces);
+    }
+
+    // Listen for breadcrumb navigation events
+    window.addEventListener('breadcrumb-navigate', ((e: CustomEvent) => {
+      const { level, province } = e.detail;
+      
+      if (level === 'regional') {
+        // Navigate back to province view (same as back button)
+        backToProvinces();
+      } else if (level === 'province' && province) {
+        // Navigate back to province regencies (reset regency zoom/selection)
+        if (currentView === 'regency' && currentProvince === province && regencyInitialBounds) {
+          // Just reset the view to show all regencies and clear regency breadcrumb
+          map.fitBounds(regencyInitialBounds, { animate: true });
+          window.dispatchEvent(new CustomEvent('breadcrumb-update', {
+            detail: { province: currentProvince, regency: null }
+          }));
+        }
+      }
+    }) as EventListener);
+
+    // Attach event handlers to province features
+    function onEachProvince(feature: any, layer: L.Layer) {
+      const provinceName = feature.properties.NAME_1 || feature.properties.name;
+      const data = disasterData[provinceName];
+
+      // Add tooltip for provinces
+      if (data) {
+        const tooltipClassName = isTouchDevice || isMobile ? 'custom-tooltip touch-tooltip' : 'custom-tooltip';
+        const closeBtn = isTouchDevice || isMobile ? '<button class="tooltip-close" aria-label="Close">×</button>' : '';
+        
+        const tooltip = L.tooltip({
+          permanent: false,
+          sticky: true,
+          className: tooltipClassName,
+          offset: [10, 0]
+        }).setContent(`
+          <div style="font-family: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif; min-width: 160px; position: relative;">
+            ${closeBtn}
+            <h3 style="margin: 0 0 8px 0; font-size: 15px; font-weight: bold; border-bottom: 1px solid #bbbbbb; padding-bottom: 5px;">
+              ${provinceName}
+            </h3>
+            <table style="width: 100%; font-size: 13px;">
+              <tr>
+                <td style="padding: 3px 0; color: #666;">Terdampak</td>
+                <td style="padding: 3px 0; text-align: right; font-weight: bold;">${data.terdampak.toLocaleString()}</td>
+              </tr>
+              <tr>
+                <td style="padding: 3px 0; color: #666;">Rumah Rusak</td>
+                <td style="padding: 3px 0; text-align: right; font-weight: bold;">${data.rumahRusak.toLocaleString()}</td>
+              </tr>
+            </table>
+            <p style="margin: 8px 0 0; font-size: 12px; color: #999;"><em>${isTouchDevice || isMobile ? 'Tap dua kali untuk lihat kabupaten' : 'Klik untuk lihat kabupaten'}</em></p>
+          </div>
+        `);
+        (layer as any).bindTooltip(tooltip);
+      }
+
+      // Different behavior for touch vs desktop
+      if (isTouchDevice || isMobile) {
+        // Mobile: single tap shows tooltip, double tap navigates to regencies
+        let tapCount = 0;
+        let tapTimeout: number | null = null;
+        
+        layer.on({
+          click: (e: L.LeafletMouseEvent) => {
+            L.DomEvent.stopPropagation(e);
+            
+            tapCount++;
+            if (tapTimeout) clearTimeout(tapTimeout);
+            
+            if (tapCount === 1) {
+              // First tap: show tooltip
+              if (currentHighlightedLayer && currentHighlightedLayer !== layer) {
+                (currentHighlightedLayer as any).setStyle(styleProvince((currentHighlightedLayer as any).feature));
+                // Close any open tooltip
+                if (currentOpenTooltip) {
+                  map.closeTooltip(currentOpenTooltip);
+                }
+              }
+              highlightFeature(e);
+              currentHighlightedLayer = layer;
+              
+              // Open the tooltip
+              const tooltipInstance = (layer as any).getTooltip();
+              if (tooltipInstance) {
+                (layer as any).openTooltip(e.latlng);
+                currentOpenTooltip = tooltipInstance;
+                
+                // Add close button handler
+                setTimeout(() => {
+                  const closeBtn = document.querySelector('.custom-tooltip .tooltip-close');
+                  if (closeBtn) {
+                    closeBtn.addEventListener('click', (evt) => {
+                      evt.stopPropagation();
+                      map.closeTooltip(tooltipInstance);
+                      currentOpenTooltip = null;
+                      if (currentHighlightedLayer) {
+                        (currentHighlightedLayer as any).setStyle(styleProvince((currentHighlightedLayer as any).feature));
+                        currentHighlightedLayer = null;
+                      }
+                    });
+                  }
+                }, 50);
+              }
+              
+              tapTimeout = window.setTimeout(() => {
+                tapCount = 0;
+              }, 300);
+            } else if (tapCount === 2) {
+              // Double tap: navigate to regencies
+              tapCount = 0;
+              // Close tooltip if open
+              if (currentOpenTooltip) {
+                map.closeTooltip(currentOpenTooltip);
+                currentOpenTooltip = null;
+              }
+              onProvinceClick(e);
+            }
+          }
+        });
+      } else {
+        // Desktop: keep original hover + click behavior
+        layer.on({
+          mouseover: highlightFeature,
+          mouseout: (e: L.LeafletMouseEvent) => resetHighlight(e, true),
+          click: onProvinceClick
+        });
+      }
+    }
+
+    // Load GeoJSON files for provinces
+    const provinceFiles = [
+      '/src/data/aceh_province.geojson',
+      '/src/data/sumut_province.geojson',
+      '/src/data/sumbar_province.geojson'
+    ];
+
+    // Store province layers
+    const provinceLayers: L.Layer[] = [];
+    
+    // Listen for \"navigate to province regencies\" from DataProvinsi
+    window.addEventListener('navigate-to-province-regencies', ((e: CustomEvent) => {
+      const { provinceName } = e.detail;
+      
+      // Check if we're already showing regencies for this province
+      if (currentView === 'regency' && currentProvince === provinceName) {
+        // Already showing correct province, no need to reload
+        return;
+      }
+      
+      // If we're in regency view for a different province, go back first
+      if (currentView === 'regency' && currentProvince !== provinceName) {
+        backToProvinces();
+        // Small delay to let the back transition complete
+        setTimeout(() => {
+          // Now trigger the province click
+          provinceLayers.forEach(geoJsonLayer => {
+            (geoJsonLayer as any).eachLayer((layer: any) => {
+              const layerProvinceName = layer.feature.properties.NAME_1 || layer.feature.properties.name;
+              if (layerProvinceName === provinceName) {
+                onProvinceClick({ target: layer } as any);
+              }
+            });
+          });
+        }, 100);
+      } else {
+        // We're at province level, just trigger the province click
+        provinceLayers.forEach(geoJsonLayer => {
+          (geoJsonLayer as any).eachLayer((layer: any) => {
+            const layerProvinceName = layer.feature.properties.NAME_1 || layer.feature.properties.name;
+            if (layerProvinceName === provinceName) {
+              onProvinceClick({ target: layer } as any);
+            }
+          });
+        });
+      }
+    }) as EventListener);
+    
+    // Listen for "view regencies" button click in mobile panel
+    document.addEventListener('viewregencies', (e: any) => {
+      const provinceName = e.detail;
+      if (mobileInfoPanel) {
+        mobileInfoPanel.style.display = 'none';
+      }
+      
+      // Find the province layer and trigger click
+      provinceLayers.forEach(geoJsonLayer => {
+        (geoJsonLayer as any).eachLayer((layer: any) => {
+          const layerProvinceName = layer.feature.properties.NAME_1 || layer.feature.properties.name;
+          if (layerProvinceName === provinceName) {
+            onProvinceClick({ target: layer } as any);
+          }
+        });
+      });
+    });
+
+    // Load each province GeoJSON
+    let loadedCount = 0;
+    provinceFiles.forEach(async (file) => {
+      try {
+        const response = await fetch(file);
+        const data = await response.json();
+        
+        const geoJsonLayer = L.geoJSON(data, {
+          style: styleProvince,
+          onEachFeature: onEachProvince
+        }).addTo(map);
+
+        provinceLayers.push(geoJsonLayer);
+        
+        // Dispatch initial regional data event after all provinces are loaded
+        loadedCount++;
+        if (loadedCount === provinceFiles.length) {
+          window.dispatchEvent(new CustomEvent('region-data-update', {
+            detail: { level: 'regional', province: null, regency: null }
+          }));
+        }
+      } catch (error) {
+        console.error(`Error loading ${file}:`, error);
+      }
+    });
+  });
+</script>

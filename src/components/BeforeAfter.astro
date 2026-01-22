@@ -1,0 +1,253 @@
+---
+const locations = [
+    {
+        id: "krueng-raya",
+        title: "Perbaikan Jembatan Krueng Raya",
+        location: "Aceh Besar, Aceh",
+        before: "https://images.pexels.com/photos/3728078/pexels-photo-3728078.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        after: "https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        thumb: "https://images.pexels.com/photos/3728078/pexels-photo-3728078.jpeg?auto=compress&cs=tinysrgb&w=150"
+    },
+    {
+        id: "lintas-barat",
+        title: "Rekonstruksi Jalan Lintas Barat",
+        location: "Meulaboh, Aceh",
+        before: "https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        after: "https://images.pexels.com/photos/1612461/pexels-photo-1612461.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        thumb: "https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=150"
+    },
+    {
+        id: "sibolangit",
+        title: "Pebersihan Longsor Sibolangit",
+        location: "Deli Serdang, Sumatera Utara",
+        before: "https://images.pexels.com/photos/3626738/pexels-photo-3626738.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        after: "https://images.pexels.com/photos/1179229/pexels-photo-1179229.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        thumb: "https://images.pexels.com/photos/3626738/pexels-photo-3626738.jpeg?auto=compress&cs=tinysrgb&w=150"
+    },
+    {
+        id: "sungai-deli",
+        title: "Normalisasi Sungai Deli",
+        location: "Medan, Sumatera Utara",
+        before: "https://images.pexels.com/photos/3551612/pexels-photo-3551612.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        after: "https://images.pexels.com/photos/973505/pexels-photo-973505.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        thumb: "https://images.pexels.com/photos/3551612/pexels-photo-3551612.jpeg?auto=compress&cs=tinysrgb&w=150"
+    },
+    {
+        id: "irigasi",
+        title: "Perbaikan Irigasi Pertanian",
+        location: "Tanah Datar, Sumatera Barat",
+        before: "https://images.pexels.com/photos/2132180/pexels-photo-2132180.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        after: "https://images.pexels.com/photos/2132180/pexels-photo-2132180.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        thumb: "https://images.pexels.com/photos/2132180/pexels-photo-2132180.jpeg?auto=compress&cs=tinysrgb&w=150"
+    },
+    {
+        id: "akses-logistik",
+        title: "Akses Jalan Logistik",
+        location: "Padang Pariaman, Sumatera Barat",
+        before: "https://images.pexels.com/photos/2933243/pexels-photo-2933243.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        after: "https://images.pexels.com/photos/1612351/pexels-photo-1612351.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        thumb: "https://images.pexels.com/photos/2933243/pexels-photo-2933243.jpeg?auto=compress&cs=tinysrgb&w=150"
+    },
+];
+---
+<hr>
+<section id="visual" class="py-12 bg-gray-50">
+    <div class="content-wrapper">
+        <!-- Header -->
+        <div class="mb-8">
+            <span class="text-amber-600 font-bold text-sm uppercase tracking-wide">Bukti Lapangan</span>
+            <h2 class="text-[#1a3a5c] text-3xl sm:text-4xl font-bold mt-2">Visualisasi Dampak & Pemulihan</h2>
+            <p class="text-gray-600 mt-3 max-w-3xl">
+                Dokumentasi visual sebelum dan sesudah intervensi tanggap darurat di lokasi-lokasi prioritas. Geser slider untuk melihat progres fisik secara langsung.
+            </p>
+        </div>
+        
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 gap-8">
+            <!-- Left: Before-After Slider -->
+            <div class="">
+                <div id="before-after-slider" class="rounded-lg aspect-1054/593">
+                    <div id="before-image">
+                        <img src={locations[0].before} alt="Sebelum Penanganan"/>
+                        <span class="absolute bottom-4 left-4 bg-black/70 text-white text-xs font-bold px-3 py-1.5 uppercase tracking-wider w-max">Sebelum Penanganan</span>
+                    </div>
+                    <div id="after-image">
+                        <img src={locations[0].after} alt="Setelah Penanganan"/>
+                        <span class="absolute bottom-4 right-4 bg-black/70 text-white text-xs font-bold px-3 py-1.5 uppercase tracking-wider">Setelah Penanganan</span>
+                    </div>
+                    <div id="resizer">
+                        <svg class="w-4 h-4 text-[#203369]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M8 9l-3 3 3 3m8-6l3 3-3 3"></path>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- Current Location Info -->
+                <div class="mt-4">
+                    <h3 id="current-title" class="text-[#1a3a5c] text-xl font-bold">{locations[0].title}</h3>
+                    <div class="flex items-center gap-1 mt-1 text-amber-600 text-sm">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        <span id="current-location">{locations[0].location.toUpperCase()}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right: Location List -->
+            <div class="grow-0 mx-auto w-full lg:w-5xl">
+                <h4 class="text-[#1a3a5c] font-bold text-sm uppercase tracking-wide mb-4">
+                    Lokasi Lainnya ({locations.length})
+                </h4>
+                
+                <div class="max-h-[300px] lg:max-h-[595px] grid grid-cols-1 gap-4 lg:grid-cols-2 overflow-y-auto" id="location-list">
+                    {locations.map((loc, index) => (
+                        <button 
+                            class={`location-item w-full flex gap-3 p-2 rounded-lg transition-all hover:bg-gray-100 text-left ${index === 0 ? 'bg-amber-50 ring-2 ring-amber-400' : ''}`}
+                            data-index={index}
+                            data-before={loc.before}
+                            data-after={loc.after}
+                            data-title={loc.title}
+                            data-location={loc.location}
+                        >
+                            <img 
+                                src={loc.thumb} 
+                                alt={loc.title}
+                                class="w-16 h-12 object-cover rounded flex-shrink-0"
+                            />
+                            <div class="flex-1 min-w-0">
+                                <h5 class="text-[#1a3a5c] font-bold text-sm leading-tight truncate">{loc.title}</h5>
+                                <span class="text-amber-600 text-xs">{loc.location}</span>
+                            </div>
+                        </button>
+                    ))}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script is:inline>
+    const slider = document.getElementById('before-after-slider');
+    const before = document.getElementById('before-image');
+    const beforeImage = before.getElementsByTagName('img')[0];
+    const afterImage = document.getElementById('after-image').getElementsByTagName('img')[0];
+    const resizer = document.getElementById('resizer');
+    const currentTitle = document.getElementById('current-title');
+    const currentLocation = document.getElementById('current-location');
+    const locationItems = document.querySelectorAll('.location-item');
+
+    let active = false;
+
+    // Sort overflow out for Overlay Image
+    document.addEventListener("DOMContentLoaded", function() {
+        let width = slider.offsetWidth;
+        beforeImage.style.width = width + 'px';
+    });
+
+    // Adjust width of image on resize 
+    window.addEventListener('resize', function() {
+        let width = slider.offsetWidth;
+        beforeImage.style.width = width + 'px';
+    });
+
+    // Location item click handler
+    locationItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const beforeSrc = this.dataset.before;
+            const afterSrc = this.dataset.after;
+            const title = this.dataset.title;
+            const location = this.dataset.location;
+            
+            // Update images
+            beforeImage.src = beforeSrc;
+            afterImage.src = afterSrc;
+            
+            // Update info
+            currentTitle.textContent = title;
+            currentLocation.textContent = location.toUpperCase();
+            
+            // Update active state
+            locationItems.forEach(li => {
+                li.classList.remove('bg-amber-50', 'ring-2', 'ring-amber-400');
+            });
+            this.classList.add('bg-amber-50', 'ring-2', 'ring-amber-400');
+            
+            // Reset slider position
+            before.style.width = '50%';
+            resizer.style.left = '50%';
+            
+            // Fix image width
+            setTimeout(() => {
+                beforeImage.style.width = slider.offsetWidth + 'px';
+            }, 50);
+        });
+    });
+
+    resizer.addEventListener('mousedown', function() {
+        active = true;
+        resizer.classList.add('resize');
+    });
+
+    document.body.addEventListener('mouseup', function() {
+        active = false;
+        resizer.classList.remove('resize');
+    });
+
+    document.body.addEventListener('mouseleave', function() {
+        active = false;
+        resizer.classList.remove('resize');
+    });
+
+    document.body.addEventListener('mousemove', function(e) {
+        if (!active) return;
+        let x = e.pageX;
+        x -= slider.getBoundingClientRect().left;
+        slideIt(x);
+        pauseEvent(e);
+    });
+
+    resizer.addEventListener('touchstart', function() {
+        active = true;
+        resizer.classList.add('resize');
+    });
+
+    document.body.addEventListener('touchend', function() {
+        active = false;
+        resizer.classList.remove('resize');
+    });
+
+    document.body.addEventListener('touchcancel', function() {
+        active = false;
+        resizer.classList.remove('resize');
+    });
+
+    // Calculation for dragging on touch devices
+    document.body.addEventListener('touchmove', function(e) {
+        if (!active) return;
+        let x;
+        
+        for (let i = 0; i < e.changedTouches.length; i++) {
+            x = e.changedTouches[i].pageX;
+        }
+        
+        x -= slider.getBoundingClientRect().left;
+        slideIt(x);
+        pauseEvent(e);
+    });
+
+    function slideIt(x) {
+        let transform = Math.max(0, (Math.min(x, slider.offsetWidth)));
+        before.style.width = transform + "px";
+        resizer.style.left = transform - 0 + "px";
+    }
+
+    // Stop divs being selected
+    function pauseEvent(e) {
+        if (e.stopPropagation) e.stopPropagation();
+        if (e.preventDefault) e.preventDefault();
+        e.cancelBubble = true;
+        e.returnValue = false;
+        return false;
+    }
+</script>

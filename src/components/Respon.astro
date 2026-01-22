@@ -1,0 +1,58 @@
+---
+import regionalData from '@/data/regional-data.json';
+const initialData = regionalData.regional.respon;
+---
+
+<section class="bg-gray-100 border-t-4 border-[#1a3a5c] p-6" id="respon-section">
+    <!-- Header -->
+    <h2 class="text-[#1a3a5c] font-bold text-lg mb-4">RESPON PEMERINTAH</h2>
+    
+    <!-- Stats Boxes -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-2">
+        <div class="bg-[#1a3a5c] text-white p-4 flex flex-col items-center justify-center">
+            <div class="text-3xl font-bold" id="respon-personil">{initialData.personil}</div>
+            <div class="text-xs uppercase tracking-wide">Personil</div>
+        </div>
+        <div class="bg-[#1a3a5c] text-white p-4 flex flex-col items-center justify-center">
+            <div class="text-3xl font-bold" id="respon-medis">{initialData.unitMedis}</div>
+            <div class="text-xs uppercase tracking-wide">Unit Medis</div>
+        </div>
+        <div class="bg-[#1a3a5c] text-white p-4 flex flex-col items-center justify-center">
+            <div class="text-3xl font-bold" id="respon-logistik">{initialData.logistik} Ton</div>
+            <div class="text-xs uppercase tracking-wide">Logistik</div>
+        </div>
+        <div class="bg-[#1a3a5c] text-white p-4 flex flex-col items-center justify-center">
+            <div class="text-3xl font-bold" id="respon-dana">Rp{initialData.dana}M</div>
+            <div class="text-xs uppercase tracking-wide">Dana Dialokasikan</div>
+        </div>
+    </div>
+</section>
+
+<script define:vars={{ regionalData }}>
+    // Function to update respon data display
+    function updateResponData(level, provinceName = null, regencyName = null) {
+        let data;
+        
+        if (level === 'regional') {
+            data = regionalData.regional.respon;
+        } else if (level === 'province' && provinceName) {
+            data = regionalData.provinces[provinceName]?.respon || regionalData.regional.respon;
+        } else if (level === 'regency' && regencyName) {
+            data = regionalData.regencies[regencyName]?.respon || regionalData.regional.respon;
+        } else {
+            data = regionalData.regional.respon;
+        }
+        
+        // Update all elements
+        document.getElementById('respon-personil').textContent = data.personil.toLocaleString();
+        document.getElementById('respon-medis').textContent = data.unitMedis.toLocaleString();
+        document.getElementById('respon-logistik').textContent = data.logistik.toLocaleString() + ' Ton';
+        document.getElementById('respon-dana').textContent = 'Rp' + data.dana.toFixed(1) + 'M';
+    }
+    
+    // Listen for region data update events from map
+    window.addEventListener('region-data-update', (e) => {
+        const { level, province, regency } = e.detail;
+        updateResponData(level, province, regency);
+    });
+</script>

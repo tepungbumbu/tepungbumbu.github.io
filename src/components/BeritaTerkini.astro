@@ -1,0 +1,82 @@
+---
+const featuredNews = {
+    title: "Darurat Regional Dinyatakan",
+    image: "https://akcdn.detik.net.id/community/media/visual/2026/01/01/dampak-bencana-banjir-dan-longsor-aceh-tengah-1767262382687_43.jpeg?w=900",
+    description: "Gubernur mendirikan posko komando di Medan. Seluruh tim tanggap darurat sekarang berada di bawah komando pusat. Jalur bantuan internasional telah dibuka.",
+    time: "08:00 WIB",
+    author: "Oleh Redaksi",
+    pinned: true,
+};
+
+const berita = [
+    {
+        title: "Andre Rosiade ke Balai PBPK Sumbar, Kawal Dana Pusat-Percepatan Pemulihan Infrastruktur Pascabencana",
+        image: "https://akcdn.detik.net.id/community/media/visual/2026/01/20/andre-rosiade-1768908605588_43.jpeg?w=250&q=90",
+        time: "10:30 WIB",
+    },
+    {
+        title: "Video Pendataan Bantuan Rumah Korban Bencana Sumatera Rampung Akhir Januari",
+        image: "https://akcdn.detik.net.id/community/media/visual/2025/12/30/desember-2025-banjir-bandang-dan-longsor-terjang-sumatera-1767084193381_43.jpeg?w=250&q=90",
+        time: "09:45 WIB",
+    },
+    {
+        title: "Pemda Diminta Sampaikan Data Kebutuhan Pascabencana Secara Presisi-Akurat",
+        image: "https://akcdn.detik.net.id/community/media/visual/2026/01/20/wakil-menteri-dalam-negeri-bima-arya-sugiarto-1768902755711_43.jpeg?w=250&q=90",
+        time: "09:15 WIB",
+    },
+    {
+        title: "Video: ASN Terdampak Bencana Sumatera Tetap Digaji Penuh",
+        image: "https://cdnv.detik.com/videoservice/AdminTV/2026/01/19/9e97de6d84384b47917e61473c6f6d1a-20260119151101-0s.jpg?w=900",
+        time: "08:30 WIB",
+    },
+    {
+        title: "Satgas Pascabencana Sumatera: 36.609 Rumah Rusak Berat, 22.020 Rusak Sedang",
+        image: "https://akcdn.detik.net.id/community/media/visual/2026/01/01/dampak-bencana-banjir-dan-longsor-aceh-tengah-1767262382687_43.jpeg?w=250&q=90",
+        time: "KEMARIN",
+    },
+];
+---
+<section class="bg-white rounded-lg">
+    <!-- Header -->
+    <h2 class="text-[#1a3a5c] font-bold text-lg mb-4 border-b-2 border-amber-200 pb-3">BERITA TERKINI</h2>
+    
+    <!-- Featured News -->
+    <a href="#" class="relative mb-6 rounded-lg overflow-hidden block bg-amber-100">
+        <img src={featuredNews.image} alt={featuredNews.title} class="w-full h-64 object-cover" />
+        
+        <!-- Badges -->
+        <div class="absolute top-3 left-3 flex gap-2">
+            <span class="bg-white text-gray-700 text-xs font-medium px-2 py-1 rounded">{featuredNews.time}</span>
+            {featuredNews.pinned && (
+                <span class="bg-[#1a3a5c] text-white text-xs font-medium px-2 py-1 rounded uppercase">Disematkan</span>
+            )}
+        </div>
+        
+        <!-- Content Overlay -->
+        <div class="p-4 text-black">
+            <h3 class="text-xl font-bold mb-2">{featuredNews.title}</h3>
+            <p class="text-sm mb-2">{featuredNews.description}</p>
+            <span class="text-amber-400 text-sm italic">{featuredNews.author}</span>
+        </div>
+    </a>
+    
+    <!-- News List -->
+    <div class="space-y-4">
+        {berita.map((item) => (
+            <a class="flex gap-3" href="#">
+                <img src={item.image} alt={item.title} class="size-20 object-cover rounded shrink-0" />
+                <div class="flex-1">
+                    <span class="text-amber-600 text-xs font-medium">{item.time}</span>
+                    <h4 class="text-[#1a3a5c] font-bold text-sm leading-tight mb-1">{item.title}</h4>
+                </div>
+            </a>
+        ))}
+    </div>
+    
+    <!-- Load More Button -->
+    <div class="mt-6">
+        <a href="#" class="w-full text-center block bg-[#1a3a5c] text-white font-bold py-3 rounded hover:bg-[#0f2a45] transition-colors uppercase text-sm">
+            Baca Lebih Banyak
+        </a>
+    </div>
+</section>

@@ -1,0 +1,54 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import { tv } from "tailwind-variants"
+
+interface Props extends HTMLAttributes<"button">, Omit<HTMLAttributes<"a">, "type"> {
+    /**
+     * Sets the variant of the button
+     * @default "default"
+     */
+    variant?: "default" | "primary" | "secondary" | "outline" | "ghost" | "info" | "success" | "warning" | "error"
+    /**
+     * Sets the size of the button
+     * @default "md"
+     */
+    size?: "sm" | "md" | "lg" | "icon"
+}
+
+const { variant = "default", size = "md", class: className, ...rest } = Astro.props
+
+const button = tv({
+    base: [
+        "inline-flex items-center justify-center gap-1.5 rounded-md font-medium whitespace-nowrap cursor-pointer",
+        "[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+        "focus-visible:outline-2 focus-visible:outline-offset-2",
+        "disabled:pointer-events-none disabled:opacity-50",
+    ],
+    variants: {
+        variant: {
+            default: "bg-neutral-950 text-neutral-50 hover:bg-neutral-950/90 focus-visible:outline-blue-600",
+            primary: "bg-blue-700 text-neutral-50 hover:bg-blue-700/90 focus-visible:outline-blue-700",
+            secondary: "bg-fuchsia-700 text-neutral-50 hover:bg-fuchsia-700/90 focus-visible:outline-fuchsia-700",
+            outline: "border-neutral-200 hover:bg-neutral-200 hover:text-neutral-950 focus-visible:outline-blue-600 border",
+            ghost: "hover:bg-neutral-950/10 hover:text-neutral-950 focus-visible:outline-blue-600 bg-transparent",
+            info: "bg-sky-300 text-sky-300-neutral-950 hover:bg-sky-300/90 focus-visible:outline-sky-300",
+            success: "bg-green-300 text-green-300-neutral-950 hover:bg-green-300/90 focus-visible:outline-green-300",
+            warning: "bg-amber-300 text-amber-950 hover:bg-amber-300/90 focus-visible:outline-amber-300",
+            error: "bg-red-700 text-neutral-50 hover:bg-red-700/90 focus-visible:outline-red-700",
+        },
+        size: {
+            sm: "h-9 px-3 py-2 text-sm",
+            md: "h-11 px-4 py-2 text-base",
+            lg: "h-12 px-8 py-2 text-lg",
+            icon: "h-11 w-11",
+        },
+    },
+    defaultVariants: { variant: "default", size: "md" },
+})
+
+const Tag = Astro.props.href ? "a" : "button"
+---
+
+<Tag class={button({ variant, size, class: className })} {...rest}>
+    <slot />
+</Tag>

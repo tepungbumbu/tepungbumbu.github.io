@@ -1,0 +1,17 @@
+@font-face {
+    font-family: "Montserrat-fallback";
+    src: local("Arial");
+    size-adjust: 106%;
+    ascent-override: 105.6%;
+    descent-override: 27.1%;
+    line-gap-override: 0%;
+}
+
+@font-face {
+    font-family: "Helvetica-fallback";
+    src: local("Arial");
+    size-adjust: 101.6%;
+    ascent-override: 71.8%;
+    descent-override: 20.7%;
+    line-gap-override: 0%;
+}

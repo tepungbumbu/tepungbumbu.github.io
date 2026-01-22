@@ -1,0 +1,32 @@
+---
+
+import Footer from "@/components/Footer.astro"
+import Header from "@/components/Header.astro"
+import MainLayout from "@/layouts/MainLayout.astro"
+import Hero from "@/components/Hero.astro"
+import Navigation from "@/components/Navigation.astro"
+import Description from "@/components/Description.astro"
+import Stats from "@/components/Stats.astro"
+import Map from "@/components/Map.astro"
+import RegionalTitle from "@/components/RegionalTitle.astro"
+import VideoJI from "@/components/VideoJI.astro"
+import BeritaTerkini from "@/components/BeritaTerkini.astro"
+import DataProvinsi from "@/components/DataProvinsi.astro"
+import BeforeAfter from "@/components/BeforeAfter.astro"
+---
+
+<MainLayout>
+    <Hero />
+    <Description />
+    
+    <hr class="w-full h-px bg-black-light4 my-6">
+    <RegionalTitle />
+    
+        <Map slot="left-content" />
+        <Stats slot="left-content" />
+        <VideoJI slot="right-content" />
+        <BeritaTerkini slot="right-content" />
+        <DataProvinsi slot="left-content" />
+        
+        <BeforeAfter slot="bottom" />
+</MainLayout>

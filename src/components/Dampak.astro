@@ -1,0 +1,89 @@
+---
+import regionalData from '@/data/regional-data.json';
+const initialData = regionalData.regional.dampak;
+---
+
+<section class="bg-white rounded-lg border border-black-light4 p-6" id="dampak-section">
+    <!-- Header -->
+    <h2 class="text-[#1a3a5c] font-bold text-lg mb-4">DAMPAK BENCANA</h2>
+    
+    <!-- Total Terdampak -->
+    <div class="mb-4">
+        <div class="text-[#1a3a5c] text-sm font-medium">TOTAL TERDAMPAK</div>
+        <div class="text-[#1a3a5c] text-5xl font-bold" id="dampak-total">{initialData.totalTerdampak.toLocaleString()}</div>
+    </div>
+    
+    <!-- Mengungsi & Korban Jiwa -->
+    <div class="grid grid-cols-2 gap-4 mb-6">
+        <div>
+            <div class="text-[#1a3a5c] text-xs font-medium">MENGUNGSI</div>
+            <div class="text-[#1a3a5c] text-2xl font-bold" id="dampak-mengungsi">{initialData.mengungsi.toLocaleString()}</div>
+        </div>
+        <div>
+            <div class="text-[#1a3a5c] text-xs font-medium">KORBAN JIWA</div>
+            <div class="text-[#1a3a5c] text-2xl font-bold" id="dampak-korban">{initialData.korbanJiwa.toLocaleString()}</div>
+        </div>
+    </div>
+    
+    <!-- Infrastructure List -->
+    <div class="divide-y divide-gray-200">
+        <div class="flex justify-between items-center py-3">
+            <span class="text-gray-700">Rumah Rusak</span>
+            <span class="text-gray-700" id="dampak-rumah">{initialData.rumahRusak.toLocaleString()}</span>
+        </div>
+        <div class="flex justify-between items-center py-3">
+            <span class="text-gray-700">Rumah Sakit</span>
+            <span class="text-gray-700" id="dampak-rs">{initialData.rumahSakit.toLocaleString()}</span>
+        </div>
+        <div class="flex justify-between items-center py-3">
+            <span class="text-gray-700">Sekolah</span>
+            <span class="text-gray-700" id="dampak-sekolah">{initialData.sekolah.toLocaleString()}</span>
+        </div>
+        <div class="flex justify-between items-center py-3">
+            <span class="text-gray-700">Jembatan</span>
+            <span class="text-gray-700" id="dampak-jembatan">{initialData.jembatan.toLocaleString()}</span>
+        </div>
+        <div class="flex justify-between items-center py-3">
+            <span class="text-gray-700">Puskesmas</span>
+            <span class="text-gray-700" id="dampak-puskesmas">{initialData.puskesmas.toLocaleString()}</span>
+        </div>    
+        <div class="flex justify-between items-center py-3">
+            <span class="text-gray-700">Gedung Pemerintah</span>
+            <span class="text-gray-700" id="dampak-gedung">{initialData.gedungPemerintah.toLocaleString()}</span>
+        </div>  
+    </div>
+</section>
+
+<script define:vars={{ regionalData }}>
+    // Function to update dampak data display
+    function updateDampakData(level, provinceName = null, regencyName = null) {
+        let data;
+        
+        if (level === 'regional') {
+            data = regionalData.regional.dampak;
+        } else if (level === 'province' && provinceName) {
+            data = regionalData.provinces[provinceName]?.dampak || regionalData.regional.dampak;
+        } else if (level === 'regency' && regencyName) {
+            data = regionalData.regencies[regencyName]?.dampak || regionalData.regional.dampak;
+        } else {
+            data = regionalData.regional.dampak;
+        }
+        
+        // Update all elements
+        document.getElementById('dampak-total').textContent = data.totalTerdampak.toLocaleString();
+        document.getElementById('dampak-mengungsi').textContent = data.mengungsi.toLocaleString();
+        document.getElementById('dampak-korban').textContent = data.korbanJiwa.toLocaleString();
+        document.getElementById('dampak-rumah').textContent = data.rumahRusak.toLocaleString();
+        document.getElementById('dampak-rs').textContent = data.rumahSakit.toLocaleString();
+        document.getElementById('dampak-sekolah').textContent = data.sekolah.toLocaleString();
+        document.getElementById('dampak-jembatan').textContent = data.jembatan.toLocaleString();
+        document.getElementById('dampak-puskesmas').textContent = data.puskesmas.toLocaleString();
+        document.getElementById('dampak-gedung').textContent = data.gedungPemerintah.toLocaleString();
+    }
+    
+    // Listen for region data update events from map
+    window.addEventListener('region-data-update', (e) => {
+        const { level, province, regency } = e.detail;
+        updateDampakData(level, province, regency);
+    });
+</script>

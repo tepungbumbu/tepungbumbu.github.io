@@ -1,0 +1,312 @@
+---
+import regionalData from '@/data/regional-data.json';
+
+// Transform province data from JSON to match component format
+const provinsiData = [
+    {
+        id: "aceh",
+        nama: regionalData.provinces["Aceh"].nama,
+        popTerdampak: regionalData.provinces["Aceh"].dampak.totalTerdampak.toLocaleString(),
+        rumahRusak: regionalData.provinces["Aceh"].dampak.rumahRusak.toLocaleString(),
+        unitMedis: regionalData.provinces["Aceh"].respon.unitMedis.toString(),
+        bantuan: regionalData.provinces["Aceh"].respon.logistik.toString(),
+    },
+    {
+        id: "sumut",
+        nama: regionalData.provinces["Sumatera Utara"].nama,
+        popTerdampak: regionalData.provinces["Sumatera Utara"].dampak.totalTerdampak.toLocaleString(),
+        rumahRusak: regionalData.provinces["Sumatera Utara"].dampak.rumahRusak.toLocaleString(),
+        unitMedis: regionalData.provinces["Sumatera Utara"].respon.unitMedis.toString(),
+        bantuan: regionalData.provinces["Sumatera Utara"].respon.logistik.toString(),
+    },
+    {
+        id: "sumbar",
+        nama: regionalData.provinces["Sumatera Barat"].nama,
+        popTerdampak: regionalData.provinces["Sumatera Barat"].dampak.totalTerdampak.toLocaleString(),
+        rumahRusak: regionalData.provinces["Sumatera Barat"].dampak.rumahRusak.toLocaleString(),
+        unitMedis: regionalData.provinces["Sumatera Barat"].respon.unitMedis.toString(),
+        bantuan: regionalData.provinces["Sumatera Barat"].respon.logistik.toString(),
+    },
+];
+
+// Transform regency data from JSON to match component format
+const kabupatenData: Record<string, { nama: string; popTerdampak: string; rumahRusak: string; unitMedis: string; bantuan: string }[]> = {
+    aceh: Object.entries(regionalData.regencies)
+        .filter(([_, data]) => data.province === "Aceh")
+        .map(([name, data]) => ({
+            nama: name,
+            popTerdampak: data.dampak.totalTerdampak.toLocaleString(),
+            rumahRusak: data.dampak.rumahRusak.toLocaleString(),
+            unitMedis: data.respon.unitMedis.toString(),
+            bantuan: data.respon.logistik.toString(),
+        })),
+    sumut: Object.entries(regionalData.regencies)
+        .filter(([_, data]) => data.province === "Sumatera Utara")
+        .map(([name, data]) => ({
+            nama: name,
+            popTerdampak: data.dampak.totalTerdampak.toLocaleString(),
+            rumahRusak: data.dampak.rumahRusak.toLocaleString(),
+            unitMedis: data.respon.unitMedis.toString(),
+            bantuan: data.respon.logistik.toString(),
+        })),
+    sumbar: Object.entries(regionalData.regencies)
+        .filter(([_, data]) => data.province === "Sumatera Barat")
+        .map(([name, data]) => ({
+            nama: name,
+            popTerdampak: data.dampak.totalTerdampak.toLocaleString(),
+            rumahRusak: data.dampak.rumahRusak.toLocaleString(),
+            unitMedis: data.respon.unitMedis.toString(),
+            bantuan: data.respon.logistik.toString(),
+        })),
+};
+---
+<section class="bg-white rounded-lg border border-black-light4 p-6" id="data-provinsi-section">
+    <!-- Header - changes based on current level -->
+    <h2 class="text-[#1a3a5c] font-bold text-lg mb-4" id="data-provinsi-header">DATA DETAIL PROVINSI</h2>
+    
+    <!-- Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full" id="data-provinsi-table">
+            <!-- Table Header -->
+            <thead>
+                <tr class="border-b border-gray-200">
+                    <th class="text-left text-xs text-gray-500 font-medium py-3 pr-4">NAMA WILAYAH</th>
+                    <th class="text-right text-xs text-gray-500 font-medium py-3 px-4">POP. TERDAMPAK</th>
+                    <th class="text-right text-xs text-gray-500 font-medium py-3 px-4">RUMAH RUSAK</th>
+                    <th class="text-right text-xs text-gray-500 font-medium py-3 px-4">UNIT MEDIS</th>
+                    <th class="text-right text-xs text-gray-500 font-medium py-3 pl-4">BANTUAN (TON)</th>
+                </tr>
+            </thead>
+            
+            <!-- Table Body -->
+            <tbody id="data-provinsi-tbody">
+                {provinsiData.map((prov) => (
+                    <tr class="border-b border-gray-100">
+                        <td class="py-4 pr-4 text-left">
+                            <span class="text-[#1a3a5c] font-bold">
+                            <button 
+                                class="hover:cursor-pointer border-b border-black-light4 border-dashed hover:text-amber-500 provinsi-btn text-left"
+                                data-provinsi-id={prov.id}
+                                data-provinsi-nama={prov.nama}
+                            >
+                                {prov.nama}
+                            </button>
+                            </span>
+                        </td>
+                        <td class="text-right text-gray-700 py-4 px-4">{prov.popTerdampak}</td>
+                        <td class="text-right text-gray-700 py-4 px-4">{prov.rumahRusak}</td>
+                        <td class="text-right text-gray-700 py-4 px-4">{prov.unitMedis}</td>
+                        <td class="text-right text-gray-700 py-4 pl-4">{prov.bantuan}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Back Button (hidden by default) -->
+    <button 
+        class="hidden mt-4 text-white text-sm font-medium bg-[#1a3a5c] px-4 py-2"
+        id="back-to-regional-btn"
+    >
+        ← Kembali ke Regional
+    </button>
+    
+    <button 
+        class="hidden mt-4 text-white text-sm font-medium bg-[#1a3a5c] px-4 py-2"
+        id="back-to-provinsi-btn"
+    >
+        ← Kembali ke <span id="current-provinsi-name"></span>
+    </button>
+</section>
+
+<script define:vars={{ provinsiData, kabupatenData }} is:inline>
+    // State management
+    let currentLevel = 'regional'; // 'regional' | 'kabupaten' | 'detail'
+    let currentProvinsi = null;
+    let currentKabupaten = null;
+
+    // DOM elements
+    const header = document.getElementById('data-provinsi-header');
+    const tbody = document.getElementById('data-provinsi-tbody');
+    const table = document.getElementById('data-provinsi-table');
+    const backToRegionalBtn = document.getElementById('back-to-regional-btn');
+    const backToProvinsiBtn = document.getElementById('back-to-provinsi-btn');
+    const currentProvinsiName = document.getElementById('current-provinsi-name');
+
+    // Render regional level (provinces)
+    function renderRegional() {
+        currentLevel = 'regional';
+        currentProvinsi = null;
+        currentKabupaten = null;
+        
+        header.textContent = 'DATA DETAIL PROVINSI';
+        backToRegionalBtn.classList.add('hidden');
+        backToProvinsiBtn.classList.add('hidden');
+        table.classList.remove('hidden');
+        
+        let html = '';
+        provinsiData.forEach(prov => {
+            html += `
+                <tr class="border-b border-gray-100">
+                    <td class="py-4 pr-4 text-left">
+                        <span class="text-[#1a3a5c] font-bold">
+                            <button 
+                                class="hover:cursor-pointer border-b border-black-light4 border-dashed hover:text-amber-500 provinsi-btn text-left"
+                                data-provinsi-id="${prov.id}"
+                                data-provinsi-nama="${prov.nama}"
+                            >
+                                ${prov.nama}
+                            </button>
+                        </span>
+                    </td>
+                    <td class="text-right text-gray-700 py-4 px-4">${prov.popTerdampak}</td>
+                    <td class="text-right text-gray-700 py-4 px-4">${prov.rumahRusak}</td>
+                    <td class="text-right text-gray-700 py-4 px-4">${prov.unitMedis}</td>
+                    <td class="text-right text-gray-700 py-4 pl-4">${prov.bantuan}</td>
+                </tr>
+            `;
+        });
+        tbody.innerHTML = html;
+        attachProvinsiListeners();
+    }
+
+    // Render kabupaten level
+    function renderKabupaten(provinsiId, provinsiNama) {
+        currentLevel = 'kabupaten';
+        currentProvinsi = { id: provinsiId, nama: provinsiNama };
+        
+        const kabList = kabupatenData[provinsiId] || [];
+        
+        header.textContent = `LAPORAN PER KABUPATEN: ${provinsiNama.toUpperCase()}`;
+        backToRegionalBtn.classList.remove('hidden');
+        backToProvinsiBtn.classList.add('hidden');
+        table.classList.remove('hidden');
+        
+        let html = '';
+        kabList.forEach(kab => {
+            html += `
+                <tr class="border-b border-gray-100">
+                    <td class="py-4 pr-4 text-left">
+                        <span class="text-[#1a3a5c] font-bold">
+                            <button 
+                                class="hover:cursor-pointer border-b border-black-light4 border-dashed hover:text-amber-500 kabupaten-btn text-left"
+                                data-kabupaten-nama="${kab.nama}"
+                            >
+                                ${kab.nama}
+                            </button>
+                        </span>
+                    </td>
+                    <td class="text-right text-gray-700 py-4 px-4">${kab.popTerdampak}</td>
+                    <td class="text-right text-gray-700 py-4 px-4">${kab.rumahRusak}</td>
+                    <td class="text-right text-gray-700 py-4 px-4">${kab.unitMedis}</td>
+                    <td class="text-right text-gray-700 py-4 pl-4">${kab.bantuan}</td>
+                </tr>
+            `;
+        });
+        tbody.innerHTML = html;
+        attachKabupatenListeners();
+    }
+
+    // Render detail level (just back button)
+    function renderDetail(kabupatenNama) {
+        currentLevel = 'detail';
+        currentKabupaten = kabupatenNama;
+        
+        header.textContent = `DETAIL: ${kabupatenNama.toUpperCase()}`;
+        backToRegionalBtn.classList.add('hidden');
+        backToProvinsiBtn.classList.remove('hidden');
+        currentProvinsiName.textContent = currentProvinsi.nama;
+        table.classList.add('hidden');
+    }
+
+    // Attach click listeners to provinsi buttons
+    function attachProvinsiListeners() {
+        document.querySelectorAll('.provinsi-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const provinsiId = e.target.dataset.provinsiId;
+                const provinsiNama = e.target.dataset.provinsiNama;
+                
+                // Update the table to show regencies
+                renderKabupaten(provinsiId, provinsiNama);
+                
+                // Update breadcrumb with province name
+                window.dispatchEvent(new CustomEvent('breadcrumb-update', {
+                    detail: { province: provinsiNama, regency: null }
+                }));
+                
+                // Update data components (Dampak, Respon, Progress) with province data
+                window.dispatchEvent(new CustomEvent('region-data-update', {
+                    detail: { level: 'province', province: provinsiNama, regency: null }
+                }));
+                
+                // Trigger map to load regencies for this province
+                window.dispatchEvent(new CustomEvent('viewregencies', {
+                    detail: provinsiNama
+                }));
+            });
+        });
+    }
+
+    // Attach click listeners to kabupaten buttons
+    function attachKabupatenListeners() {
+        document.querySelectorAll('.kabupaten-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const kabupatenNama = e.target.dataset.kabupatenNama;
+                
+                // Update breadcrumb with regency name
+                window.dispatchEvent(new CustomEvent('breadcrumb-update', {
+                    detail: { province: currentProvinsi.nama, regency: kabupatenNama }
+                }));
+                
+                // Update data components (Dampak, Respon, Progress) with regency data
+                window.dispatchEvent(new CustomEvent('region-data-update', {
+                    detail: { level: 'regency', province: currentProvinsi.nama, regency: kabupatenNama }
+                }));
+                
+                // Ensure map is showing the correct province's regencies
+                // First dispatch a custom event that the map will use to navigate properly
+                window.dispatchEvent(new CustomEvent('navigate-to-province-regencies', {
+                    detail: { 
+                        provinceName: currentProvinsi.nama,
+                        regencyName: kabupatenNama 
+                    }
+                }));
+            });
+        });
+    }
+
+    // Back button listeners
+    backToRegionalBtn.addEventListener('click', () => {
+        renderRegional();
+        
+        // Update breadcrumb to reset to regional only
+        window.dispatchEvent(new CustomEvent('breadcrumb-update', {
+            detail: { province: null, regency: null }
+        }));
+        
+        // Navigate map back to regional view
+        window.dispatchEvent(new CustomEvent('breadcrumb-navigate', {
+            detail: { level: 'regional' }
+        }));
+        
+        // Dispatch event to update data components back to regional level
+        window.dispatchEvent(new CustomEvent('region-data-update', {
+            detail: { level: 'regional', province: null, regency: null }
+        }));
+        
+        // Scroll to the map at the top
+        const mapElement = document.getElementById('map');
+        if (mapElement) {
+            mapElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+
+    backToProvinsiBtn.addEventListener('click', () => {
+        if (currentProvinsi) {
+            renderKabupaten(currentProvinsi.id, currentProvinsi.nama);
+        }
+    });
+
+    // Initialize
+    attachProvinsiListeners();
+</script>
